@@ -48,13 +48,13 @@ import java.util.List;
 public final class MecanumDrive {
     public static class Params {
         // drive model parameters
-        public double inPerTick = 0;
-        public double lateralInPerTick = 1;
+        public double inPerTick = 0.0241331131715991;
+        public double lateralInPerTick = 0.0347963621984974;
         public double trackWidthTicks = 0;
 
         // feedforward parameters (in tick units)
-        public double kS = 0;
-        public double kV = 0;
+        public double kS = 0.9759295731135187;
+        public double kV = 0.004394639865259546;
         public double kA = 0;
 
         // path profile parameters (in inches)
@@ -176,10 +176,10 @@ public final class MecanumDrive {
             module.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
 
-        leftFront = hardwareMap.get(DcMotorEx.class, "leftFront");
-        leftBack = hardwareMap.get(DcMotorEx.class, "leftBack");
-        rightBack = hardwareMap.get(DcMotorEx.class, "rightBack");
-        rightFront = hardwareMap.get(DcMotorEx.class, "rightFront");
+        leftFront = hardwareMap.get(DcMotorEx.class, "motor_front_left");
+        leftBack = hardwareMap.get(DcMotorEx.class, "motor_back_left");
+        rightBack = hardwareMap.get(DcMotorEx.class, "motor_back_right");
+        rightFront = hardwareMap.get(DcMotorEx.class, "motor_front_right");
 
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
