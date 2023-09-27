@@ -33,6 +33,7 @@ import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
@@ -48,14 +49,14 @@ import java.util.List;
 public final class MecanumDrive {
     public static class Params {
         // drive model parameters
-        public double inPerTick = 0.0241331131715991;
-        public double lateralInPerTick = 0.0347963621984974;
-        public double trackWidthTicks = 0;
+        public double inPerTick = (55/-2296.5);
+        public double lateralInPerTick = 0.02; //0.0347963621984974
+        public double trackWidthTicks = -1055;
 
         // feedforward parameters (in tick units)
-        public double kS = 0.9759295731135187;
-        public double kV = 0.004394639865259546;
-        public double kA = 0;
+        public double kS = 0.770480371264533;//0.9759295731135187
+        public double kV = -0.004432199753940032; //0.004394639865259546
+        public double kA = -0.0004;
 
         // path profile parameters (in inches)
         public double maxWheelVel = 50;
@@ -181,6 +182,12 @@ public final class MecanumDrive {
         rightBack = hardwareMap.get(DcMotorEx.class, "motor_back_right");
         rightFront = hardwareMap.get(DcMotorEx.class, "motor_front_right");
 
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightBack.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+
+
         leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -189,7 +196,7 @@ public final class MecanumDrive {
         imu = hardwareMap.get(IMU.class, "imu");
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
+                RevHubOrientationOnRobot.UsbFacingDirection.RIGHT));
         imu.initialize(parameters);
 
         voltageSensor = hardwareMap.voltageSensor.iterator().next();
